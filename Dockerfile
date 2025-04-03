@@ -1,9 +1,4 @@
-FROM php:7.1-apache-jessie
-MAINTAINER ZQian<zqiannnn@gmail.com>
-
-# Environment
-#RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
-#RUN sed -i 's|security.debian.org/debian-security|mirrors.ustc.edu.cn/debian-security|g' /etc/apt/sources.list
+FROM  php:7.1-apache
 RUN apt-get update && apt-get install -y wget libjpeg-dev  libpng-dev libfreetype6-dev libmagickwand-dev --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     # ImageMagick
@@ -18,9 +13,11 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 
 
 # Application
-ENV IMAGE_VERSION=2.0
+ENV IMAGE_VERSION=latest
 COPY . /var/www/html
-RUN chmod a+w imgs data
+RUN chmod a+w /var/www/html/imgs /var/www/html/data \
+    && chown -R www-data:www-data /var/www/html/
+USER www-data
 VOLUME ["/var/www/html/data","/var/www/html/imgs"]
 
 CMD ["apache2-foreground"]

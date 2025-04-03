@@ -1,3 +1,5 @@
+# 在源作者基础上增加arm架构支持，可以直接使用docker-compose.yaml运行项目
+  运行方式：下载docker-compose.yaml文件到本地，在同级目录执行docker-compose up -d
 # ImgURL
 ImgURL是一款简单、纯粹的图床程序，使用PHP + SQLite 3开发。
 
